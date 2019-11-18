@@ -19,6 +19,7 @@ namespace TetrisEngine{
             void CleanMovingBeforeEvent();
             void UpdateGridForMovingTetrimino(Tetrimino,TetriminosColors);
             bool CheckMove(sf::Vector2i);
+            bool CheckFuturMoveWithOthers(sf::Vector2i);
             bool CheckRotation();
     };
 }

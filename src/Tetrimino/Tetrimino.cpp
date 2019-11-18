@@ -37,7 +37,7 @@ void Tetrimino::SetFallingState(bool s){
 }
 
 bool Tetrimino::IsColoredAt(sf::Vector2i pos){
-    if(Arrays[pos.x][pos.y] > 0){
+    if(Arrays[pos.x][pos.y] == 1){
         return true;
     }
     return false;

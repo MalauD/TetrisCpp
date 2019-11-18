@@ -63,6 +63,9 @@ bool Playfield::CheckMove(sf::Vector2i mov){
     auto width = ToUnderlying<TetriminosWidth>(ttr.GetWidth());
     auto FuturePos = ttr.GetPosition();
 
+    if(!CheckFuturMoveWithOthers(mov))
+        return false;
+
     if(FuturePos.x + (int)(width - ttr.GetDynamicBound(Bound::Left)) >= 0)
         if(FuturePos.x + (int)(ttr.GetDynamicBound(Bound::Right)) <= DEFAULT_PLAYFIELD.x)
             if(FuturePos.y +(int)(ttr.GetDynamicBound(Bound::Bottom)) <= DEFAULT_PLAYFIELD.y)
@@ -90,6 +93,33 @@ bool Playfield::CheckRotation(){
         
     return false;
 }
+
+bool Playfield::CheckFuturMoveWithOthers(sf::Vector2i futureMov){ //? May work... In reality NOOOO
+
+    Tetrimino ttr = Tetriminos.back();
+    Tetrimino ttrBefore = ttr;
+    ttr.Move(futureMov);
+    auto pos = ttr.GetPosition();
+    for(int x = pos.x; x < pos.x + 4; x += 1){
+        for(int y = pos.y; y < pos.y + 4; y += 1){
+            sf::Vector2i Temp = sf::Vector2i(x - pos.x, y - pos.y);
+            if(ttr.IsColoredAt(Temp) || true){
+                if(ttrBefore.IsColoredAt(Temp)){
+                    //ne pas faire confiance à Plafield::GetColorAt
+                    //! Donc pas de pb pour cette piece
+
+                }else{
+                    if(GetObjectAt(sf::Vector2i(x,y)) != TetriminosColors::Empty){
+                        return false;
+                    }
+                }
+            }
+        }
+    }
+    return true;
+}
+
+
 
 void Playfield::Update(){
     Tetrimino& Moving = Tetriminos.back();

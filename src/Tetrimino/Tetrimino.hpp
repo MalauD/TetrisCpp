@@ -69,7 +69,7 @@ namespace TetrisEngine{
         Top
     };
 
-    class Tetrimino : MatrixU4{
+    class Tetrimino : public MatrixU4{
         public:
             Tetrimino(const TetriminosContainer&,const TetriminosColors);
             Tetrimino(const TetriminosContainer&,const TetriminosColors,sf::Vector2i);

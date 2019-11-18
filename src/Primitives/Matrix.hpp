@@ -19,6 +19,7 @@ namespace TetrisEngine {
             virtual void Rotate(Rotation);
             virtual void Rotate(Rotation,uint8_t CustomSize);
             void Print();
+            uint8_t inline GetValueAt(uint8_t x,uint8_t y) { return Arrays[x][y];}
         protected:
             T Arrays[Size][Size];
     };
