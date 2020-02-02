@@ -2,6 +2,12 @@
 
 using namespace TetrisEngine;
 
+Tetrimino TetrisEngine::Tetrimino::GetRandom()
+{
+    auto rndColor = TetriminosColorsRnd::Get();
+    return Tetrimino(GetContainerFromType(rndColor), rndColor);
+}
+
 Tetrimino::Tetrimino(const TetriminosContainer& tc,const TetriminosColors Tcl) : MatrixU4(&tc), Color(Tcl){
     Position = STARTUP_POS_TETRIMINO;
     IsFalling = true;
@@ -149,5 +155,44 @@ uint8_t Tetrimino::GetDynamicBound(Bound b){
         return GetDynamicBottomBound();
     default:
         return -1;
+    }
+}
+
+bool TetrisEngine::Tetrimino::IterateActiveCell(std::function<bool(sf::Vector2i)> ActiveCb)
+{
+    for (int x = 0; x < 4; x++)
+        for (int y = 0; y < 4; y++)
+            if (IsColoredAt(sf::Vector2i(x, y))) {
+                if (ActiveCb(sf::Vector2i(x, y))) {
+                    continue;
+                }
+                else {
+                    return false;
+                }
+            }
+    return true;
+}
+
+const TetriminosContainer& TetrisEngine::Tetrimino::GetContainerFromType(TetriminosColors color)
+{
+    switch (color)
+    {
+    case TetrisEngine::TetriminosColors::Blank:
+    case TetrisEngine::TetriminosColors::Empty:
+        return Empty;
+    case TetrisEngine::TetriminosColors::I:
+        return I;
+    case TetrisEngine::TetriminosColors::O:
+        return O;
+    case TetrisEngine::TetriminosColors::T:
+        return T;
+    case TetrisEngine::TetriminosColors::L:
+        return L;
+    case TetrisEngine::TetriminosColors::J:
+        return J;
+    case TetrisEngine::TetriminosColors::Z:
+        return Z;
+    case TetrisEngine::TetriminosColors::S:
+        return S;
     }
 }

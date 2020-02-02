@@ -27,3 +27,15 @@ int PlayfieldContainer::SetObjectAt(TetriminosColors tetriminos, sf::Vector2i Po
     sf::Color color(ToUnderlying<TetriminosColors>(tetriminos));
     GridShape[Pos.x][Pos.y].setFillColor(color);
 }
+
+void TetrisEngine::PlayfieldContainer::ShiftDownFromAbove(int line)
+{
+    for (int y = line; y >= 0; y--) {
+        for (int x = 0; x < GetSize().x; x++) {
+            auto curPos = sf::Vector2i(x, y);
+            auto obj = GetObjectAt(curPos);
+            SetObjectAt(obj, sf::Vector2i(curPos.x, curPos.y + 1));
+            SetObjectAt(TetriminosColors::Empty, curPos);
+        }
+    }
+}

@@ -6,6 +6,7 @@
 #include "Types.hpp"
 #include "stdint.h"
 #include "./../Primitives/Matrix.hpp"
+#include <functional>
 
 namespace TetrisEngine{
 
@@ -62,6 +63,13 @@ namespace TetrisEngine{
         {0,0,0,0}
     }; 
 
+    const TetriminosContainer Empty = {
+        {0,0,0,0},
+        {0,0,0,0},
+        {0,0,0,0},
+        {0,0,0,0}
+    };
+
     enum class Bound{
         Left,
         Right,
@@ -71,6 +79,7 @@ namespace TetrisEngine{
 
     class Tetrimino : public MatrixU4{
         public:
+            static Tetrimino GetRandom();
             Tetrimino(const TetriminosContainer&,const TetriminosColors);
             Tetrimino(const TetriminosContainer&,const TetriminosColors,sf::Vector2i);
             sf::Vector2i GetPosition();
@@ -82,7 +91,9 @@ namespace TetrisEngine{
             void Rotate();
             TetriminosWidth GetWidth();
             uint8_t GetDynamicBound(Bound);
+            bool IterateActiveCell(std::function<bool(sf::Vector2i)> ActiveCb);
         private:
+            static const TetriminosContainer& GetContainerFromType(TetriminosColors color);
             const TetriminosColors Color;
             sf::Vector2i Position;
             bool IsFalling;

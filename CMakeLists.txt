@@ -4,7 +4,6 @@
 cmake_minimum_required (VERSION 3.8)
 project(TetrisCpp VERSION 0.1.0)
 
-set(SFML_DIR "C:/Users/malau/Downloads/SFML-2.5.1-windows-gcc-5.1.0-tdm-32-bit/SFML-2.5.1/lib/cmake/SFML")
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 

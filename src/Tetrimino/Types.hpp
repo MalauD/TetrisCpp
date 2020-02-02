@@ -5,6 +5,7 @@
 
 #include "./SFML/Graphics.hpp"
 #include <type_traits>
+#include <random>
 
 namespace TetrisEngine{
 
@@ -26,6 +27,31 @@ namespace TetrisEngine{
         S = 0x00F000FF
     };
 
+    struct TetriminosColorsRnd {
+        static TetriminosColors Get() {
+            std::random_device dev;
+            std::mt19937 rng(dev());
+            std::uniform_int_distribution<std::mt19937::result_type> dist6(0, 6);
+
+            switch (dist6(rng))
+            {
+            case 0:
+                return TetriminosColors::I;
+            case 1:
+                return TetriminosColors::O;
+            case 2:
+                return TetriminosColors::T;
+            case 3:
+                return TetriminosColors::L;
+            case 4:
+                return TetriminosColors::J;
+            case 5:
+                return TetriminosColors::Z;
+            case 6:
+                return TetriminosColors::S;
+            }
+        }
+    };
 
     enum class TetriminosWidth : unsigned int{
         I_W = 4,

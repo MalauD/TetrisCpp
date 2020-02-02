@@ -14,13 +14,18 @@ namespace TetrisEngine{
             void AddTetrimino(Tetrimino);
             void HandleEvent(sf::Keyboard::Key);
             void Update();
+            int GetScore();
+            int Level = 1;
         private:
             std::vector<Tetrimino> Tetriminos;
+            int ClearLines();
             void CleanMovingBeforeEvent();
             void UpdateGridForMovingTetrimino(Tetrimino,TetriminosColors);
             bool CheckMove(sf::Vector2i);
             bool CheckFuturMoveWithOthers(sf::Vector2i);
+            bool CheckFuturRotateWithOthers();
             bool CheckRotation();
+            int Score = 0;
     };
 }
 #endif

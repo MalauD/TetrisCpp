@@ -1,4 +1,5 @@
 #include <iostream>
+#include <sstream>
 
 #include "SFML/Graphics.hpp"
 #include "./Playfield/Playfield.hpp"
@@ -9,31 +10,58 @@
 const int SF_WINDOW_WIDTH = 1000;
 const int SF_WINDOW_HEIGHT = 1000;
 
+std::string toString(int integer)
+{
+    std::ostringstream os;
+    os << "Score : " << integer;
+    return os.str();
+}
+
 int main()
 {
     TetrisEngine::Playfield pf = TetrisEngine::Playfield(SF_WINDOW_WIDTH / TetrisEngine::DEFAULT_PLAYFIELD.y);
 
     sf::RenderWindow window(sf::VideoMode(SF_WINDOW_WIDTH, SF_WINDOW_HEIGHT), "Tetris...");
-    window.setFramerateLimit(30);
+    window.setFramerateLimit(60);
 
-    auto tet = TetrisEngine::Tetrimino(TetrisEngine::J,TetrisEngine::TetriminosColors::J);
+    
+    pf.AddTetrimino(TetrisEngine::Tetrimino::GetRandom());
 
-    pf.AddTetrimino(tet);
+    sf::Clock cl;
+
+    sf::Font font;
+    font.loadFromFile("arial.ttf");
+
+    sf::Text scoreTxt;
+    scoreTxt.setFont(font);
+    scoreTxt.setCharacterSize(24);
+    scoreTxt.setFillColor(sf::Color::White);
+    scoreTxt.setPosition(SF_WINDOW_WIDTH / TetrisEngine::DEFAULT_PLAYFIELD.y * 10 + 10,0);
 
     while (window.isOpen())
     {
         sf::Event event;
-        while (window.pollEvent(event))
-        {
-            if (event.type == sf::Event::Closed)
-                window.close();
-            if(event.type == sf::Event::KeyPressed)
-                pf.HandleEvent(event.key.code);
+
+        scoreTxt.setString(toString(pf.GetScore()));
+
+        if (cl.getElapsedTime().asSeconds() > 0.5) {
+            pf.HandleEvent(sf::Keyboard::Down);
+            cl.restart();
+        }
+        else {
+            while (window.pollEvent(event))
+            {
+                if (event.type == sf::Event::Closed)
+                    window.close();
+                if (event.type == sf::Event::KeyPressed)
+                    pf.HandleEvent(event.key.code);
+            }
         }
 
         window.clear();
         pf.Update();
         window.draw(pf);
+        window.draw(scoreTxt);
         window.display();
     }
 

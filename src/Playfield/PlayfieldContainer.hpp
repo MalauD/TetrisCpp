@@ -29,6 +29,7 @@ namespace TetrisEngine{
             PlayfieldContainer(sf::Vector2i,int);
             TetriminosColors GetObjectAt(sf::Vector2i);
             int SetObjectAt(TetriminosColors,sf::Vector2i);
+            void ShiftDownFromAbove(int line);
         private:
     };
 }

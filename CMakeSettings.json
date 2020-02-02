@@ -4,7 +4,7 @@
       "name": "x64-Debug",
       "generator": "Ninja",
       "configurationType": "Debug",
-      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "inheritEnvironments": [ "clang_cl_x64" ],
       "buildRoot": "${projectDir}\\out\\build\\${name}",
       "installRoot": "${projectDir}\\out\\install\\${name}",
       "cmakeCommandArgs": "",
@@ -13,11 +13,35 @@
       "variables": [
         {
           "name": "SFML_DIR",
-          "value": "C:/Users/malau/Downloads/SFML-2.5.1-windows-gcc-5.1.0-tdm-32-bit/SFML-2.5.1/lib/cmake/SFML",
+          "value": "C:/Users/malau/Downloads/SFML-2.5.1-windows-gcc-5.1.0-tdm-32-bit/SFML-2.5.1/lib/cmake",
           "type": "PATH"
         }
       ],
       "intelliSenseMode": "windows-msvc-x86"
+    },
+    {
+      "name": "x86-Clang-Debug",
+      "generator": "Ninja",
+      "configurationType": "Debug",
+      "buildRoot": "${projectDir}\\out\\build\\${name}",
+      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "cmakeCommandArgs": "",
+      "buildCommandArgs": "-v",
+      "ctestCommandArgs": "",
+      "inheritEnvironments": [ "clang_cl_x86" ],
+      "variables": []
+    },
+    {
+      "name": "x64-Debug-msvc",
+      "generator": "Ninja",
+      "configurationType": "Debug",
+      "buildRoot": "${projectDir}\\out\\build\\${name}",
+      "installRoot": "${projectDir}\\out\\install\\${name}",
+      "cmakeCommandArgs": "",
+      "buildCommandArgs": "-v",
+      "ctestCommandArgs": "",
+      "inheritEnvironments": [ "msvc_x64_x64" ],
+      "variables": []
     }
   ]
 }
