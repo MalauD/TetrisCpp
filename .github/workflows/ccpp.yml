@@ -3,17 +3,6 @@ name: C/C++ CI
 on: [push]
 
 jobs:
-  build-ubuntu:
-
-    runs-on: ubuntu-latest
-    
-    steps:
-    - uses: actions/checkout@v2
-    - name: configure
-      run: mkdir build && cd build && cmake -DCMAKE_CXX_FLAGS="-Werror" ..
-    - name: build
-      run: cmake --build build
-
   build-windows:
 
     runs-on: ${{ matrix.os }}
@@ -24,6 +13,10 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: configure
-      run: mkdir build && cd build && cmake ..
+      run: mkdir build
+    - name: Dir
+      run: cd build
+    - name Cmake
+      run: cmake ..
     - name: build
       run: cmake --build build --config Debug
