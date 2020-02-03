@@ -7,8 +7,14 @@ Playfield::Playfield(int cellSize) : PlayfieldContainer(cellSize){
 }
 
 void Playfield::AddTetrimino(Tetrimino ttr) {
-    Tetriminos.push_back(ttr);
-    UpdateGridForMovingTetrimino(ttr,ttr.GetColor());
+    if (IsSpaceClear(ttr, ttr.GetPosition())) {
+        Tetriminos.push_back(ttr);
+        UpdateGridForMovingTetrimino(ttr, ttr.GetColor());
+    }
+    else {
+        IsRunning = false;
+    }
+   
 }
 
 void Playfield::UpdateGridForMovingTetrimino(Tetrimino Moving,TetriminosColors clr){
@@ -152,6 +158,20 @@ bool Playfield::CheckRotation(){
             
         
     return false;
+}
+
+bool TetrisEngine::Playfield::IsSpaceClear(Tetrimino ttr, sf::Vector2i pos)
+{
+    return ttr.IterateActiveCell([&](sf::Vector2i relPos) {
+        sf::Vector2i gridPos(relPos.x + pos.x, relPos.y + pos.y);
+
+        auto obj = GetObjectAt(gridPos);
+        if (obj != TetriminosColors::Empty && obj != TetriminosColors::Blank) {
+            return false;
+        }
+
+        return true;
+        });
 }
 
 bool Playfield::CheckFuturMoveWithOthers(sf::Vector2i futureMov){

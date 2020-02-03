@@ -16,6 +16,7 @@ namespace TetrisEngine{
             void Update();
             int GetScore();
             int Level = 1;
+            bool IsRunning = true;
         private:
             std::vector<Tetrimino> Tetriminos;
             int ClearLines();
@@ -25,7 +26,9 @@ namespace TetrisEngine{
             bool CheckFuturMoveWithOthers(sf::Vector2i);
             bool CheckFuturRotateWithOthers();
             bool CheckRotation();
+            bool IsSpaceClear(Tetrimino,sf::Vector2i);
             int Score = 0;
+            
     };
 }
 #endif

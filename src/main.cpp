@@ -44,8 +44,9 @@ int main()
 
         scoreTxt.setString(toString(pf.GetScore()));
 
-        if (cl.getElapsedTime().asSeconds() > 0.5) {
-            pf.HandleEvent(sf::Keyboard::Down);
+        if (cl.getElapsedTime().asSeconds() > 0.25) {
+            if(pf.IsRunning)
+                pf.HandleEvent(sf::Keyboard::Down);
             cl.restart();
         }
         else {
@@ -54,12 +55,16 @@ int main()
                 if (event.type == sf::Event::Closed)
                     window.close();
                 if (event.type == sf::Event::KeyPressed)
-                    pf.HandleEvent(event.key.code);
+                    if(pf.IsRunning)
+                        pf.HandleEvent(event.key.code);
             }
         }
 
         window.clear();
-        pf.Update();
+        if (pf.IsRunning) {
+            pf.Update();
+            
+        }
         window.draw(pf);
         window.draw(scoreTxt);
         window.display();
